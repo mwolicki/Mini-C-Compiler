@@ -2,10 +2,7 @@
 
 open System
 
-type Name(name:string) =
-
-    override this.ToString() =
-        sprintf "%A" name
+type Name = string
 
 
 type Type =
@@ -70,7 +67,7 @@ type Types =
     | Delegate of Visibility * Name
     | Enum of Visibility * Name
 
-type Using(using: string) = class end
+type Using = string
 
 type Scope = 
     | Namespace of Name * Option<Using> * seq<Types>
@@ -81,10 +78,10 @@ type Scope =
 //Small test if AST is usable
 let c = 
       File(None, 
-        [Namespace (Name("Test"), None,
-            [Class(Public, None, Name("TestClass"), 
+        [Namespace ("Test", None,
+            [Class(Public, None, "TestClass", 
                 TypeMembers [
-                    Method(Some Public, None, ReturnType(""), Name("Cat"), [], Statements[If (Comparison, []); Else []])
+                    Method(Some Public, None, ReturnType(""), "Cat", [], Statements[If (Comparison, []); Else []])
                 ])
             ])
          ])

@@ -30,13 +30,13 @@ let pvisib =
 
 let pident = many1Satisfy (fun a -> System.Char.IsLetterOrDigit a)
 
-let pname = pident |>> fun s-> Name(s)
+let pname = pident |>> fun s-> s
 
 let preturnType =  
             attempt (spaces >>. pident .>> spaces .>> pstring "[" .>> spaces .>> pstring "]" |>> fun p -> ReturnArrayType (p))
             <|> (spaces >>. pident |>> fun p -> ReturnType(p))
 
-let pParam = preturnType .>> spaces .>>. pident |>> fun (retTyp, name) -> Param(Name(name), retTyp)
+let pParam = preturnType .>> spaces .>>. pident |>> fun (retTyp, name) -> Param(name, retTyp)
 
 let pStm = preturnType .>> spaces .>>. pident |>> fun (retTyp, name) -> For
 
@@ -59,4 +59,3 @@ test pMethod
         {
             System.Console.WriteLine("Example Test - should be displayed on screen");
         }"""
-            
