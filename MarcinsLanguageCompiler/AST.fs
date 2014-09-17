@@ -3,22 +3,16 @@
 open System
 
 type Name = string
-
+type astType = string
 
 type Type =
-    | ReturnType of string
-    | ReturnArrayType of string
-    | VariableType of string
-    | VariableArrayType of string
+    | ReturnType of astType
+    | ReturnArrayType of astType
+    | VariableType of astType
+    | VariableArrayType of astType
 
 
-type Param(name: Name, paramType:Type) =
-    let ParamName: Name = name
-    let ParamType: Type = paramType
-
-    override this.ToString() =
-        sprintf "%A of %A" name paramType
-
+type Param = {Name : Name; ParamType:Type}
 
 type Prefix =
     | Final
@@ -77,9 +71,9 @@ type Scope =
    
 //Small test if AST is usable
 let c = 
-      File(None, 
+      File(None,
         [Namespace ("Test", None,
-            [Class(Public, None, "TestClass", 
+            [Class(Public, None, "TestClass",
                 TypeMembers [
                     Method(Some Public, None, ReturnType(""), "Cat", [], Statements[If (Comparison, []); Else []])
                 ])
